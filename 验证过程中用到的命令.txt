@@ -1,0 +1,13 @@
+put 'user_friend', 'p1', 'friends:p2', 'p2'
+put 'user_friend', 'p1', 'friends:p3', 'p3'
+put 'user_friend', 'p1', 'friends:p5', 'p5'
+put 'user_friend', 'p2', 'friends:p1', 'p1'
+put 'user_friend', 'p3', 'friends:p1', 'p1'
+put 'user_friend', 'p3', 'friends:p1', 'p4'
+
+alter 'user_friend',METHOD => 'table_att','Coprocessor'=>'hdfs://bd01:9000/processor/processor.jar|com.lagouedu.homework.DeleteFriend|1001|'
+alter 'user_friend',METHOD=>'table_att_unset',NAME=>'coprocessor$1'
+delete 'user_friend','p1','friends:p3'
+
+
+PS：关联删除结果验证时 hbase shell 卡死一次，结果正确
